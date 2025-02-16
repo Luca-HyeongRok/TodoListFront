@@ -131,33 +131,26 @@ function Home() {
 
   const onCreate = useCallback(
     async (content, priority, startDate, endDate) => {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (!user) {
-        alert("로그인이 필요합니다.");
-        return;
-      }
-
-      const newTodo = {
-        userId: user.userId, // 유저 id 추가 (어떤 유저의 Todo인지 알기 위해)
-        done: false,
-        content,
-        priority,
-        startDate,
-        endDate,
-      };
-
       try {
         const response = await fetch(`${BASE_URL}/todos`, {
           method: "POST",
-          body: JSON.stringify(newTodo),
+          body: JSON.stringify({
+            content,
+            priority,
+            startDate,
+            endDate,
+          }),
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include", // 🔥 세션 유지 필수
         });
 
         if (!response.ok) {
-          throw new Error("할 일 추가 실패");
+          throw new Error(`할 일 추가 실패 (status: ${response.status})`);
         }
+
+        console.log("할 일 추가 성공!");
 
         const updatedData = await fetchTodos();
         dispatch({ type: "SET_TODOS", data: updatedData });
@@ -242,6 +235,7 @@ function Home() {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({
             listId,
             content: newContent,

@@ -26,6 +26,7 @@ const Register = () => {
 
       if (data.message === "회원가입 성공") {
         localStorage.setItem("user", JSON.stringify(data));
+        alert("회원가입이 성공했습니다. 로그인 해주세요.");
         navigate("/");
       } else {
         alert(data.message || "이미 존재하는 아이디입니다.");

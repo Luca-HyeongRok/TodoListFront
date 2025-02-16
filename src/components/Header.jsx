@@ -11,9 +11,21 @@ const Header = () => {
 
   // 로그인한 사용자 정보 가져오기
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      setUserName(user.name); // 사용자 이름 저장
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        if (user?.username) {
+          setUserName(user.username);
+          console.log("로그인된 사용자:", user.username);
+        } else {
+          console.warn("사용자 정보에 name이 없음:", user);
+        }
+      } catch (error) {
+        console.error("localStorage 파싱 오류:", error);
+      }
+    } else {
+      console.warn("localStorage에 사용자 정보 없음");
     }
   }, []);
 
@@ -54,13 +66,15 @@ const Header = () => {
 
       {/* 로그인한 사용자 정보 표시 */}
       <div className="user-info">
-        {userName && (
+        {userName ? (
           <span>
             {userName}님 |{" "}
             <span className="logout-link" onClick={handleLogout}>
               로그아웃
             </span>
           </span>
+        ) : (
+          <span>로그인 필요</span>
         )}
       </div>
     </div>
