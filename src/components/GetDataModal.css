@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 /* 모달 콘텐츠 */
 .modal-content {
@@ -127,4 +128,8 @@
 .react-datepicker-wrapper,
 .react-datepicker__input-container {
   width: 100%;
+}
+
+.react-datepicker-popper {
+  width: 50px;
 }

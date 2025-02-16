@@ -14,9 +14,37 @@ import Header from "../components/Header";
 import Editor from "../components/Editor";
 import List from "../components/List";
 import Footer from "../components/Footer";
-// API 요청 함수
+
+// 로그인 상태 확인 API
+const checkSession = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/session`, {
+      method: "GET",
+      credentials: "include", // 세션 유지
+    });
+
+    if (!response.ok) {
+      console.error("세션이 만료되었거나 로그인되지 않음");
+      return null;
+    }
+
+    const userData = await response.json();
+    localStorage.setItem("user", JSON.stringify(userData)); // 세션 데이터 저장
+    return userData;
+  } catch (error) {
+    console.error("세션 확인 중 오류 발생:", error);
+    return null;
+  }
+};
+
+// 할 일 목록 가져오기(userId를 통한)
 const fetchTodos = async () => {
   const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user || !user.userId) {
+    console.error("fetchTodos: userId가 없습니다.");
+    return [];
+  }
 
   try {
     const response = await fetch(`${BASE_URL}/todos/user`, {
@@ -24,22 +52,27 @@ const fetchTodos = async () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: user.userId }), // ✅ userId 사용
+      credentials: "include", // 세션 유지
+      body: JSON.stringify({ userId: user.userId }), // userId를 포함하여 보냄
     });
+
     if (!response.ok) {
       throw new Error("할 일 목록을 불러오는 데 실패했습니다.");
     }
 
     const data = await response.json();
-    return data; // Todo 목록 반환
+    return data;
   } catch (error) {
     console.error("할 일 목록 불러오기 오류:", error);
     return [];
   }
 };
 
+//Context API
 export const TodoStateContext = createContext();
 export const TodoDispatchContext = createContext();
+
+//Reducer 정의
 function reducer(state, action) {
   switch (action.type) {
     case "CREATE":
@@ -73,23 +106,24 @@ function reducer(state, action) {
 
 function Home() {
   const [todos, dispatch] = useReducer(reducer, []);
+  const navigate = useNavigate();
   //const listIdRef = useRef(1);
 
-  const navigate = useNavigate();
-
+  //세션 확인 후 로그인 유지
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-      navigate("/"); // 로그인하지 않은 사용자는 로그인 페이지로 이동
-    }
+    const checkLogin = async () => {
+      const user = await checkSession();
+      if (!user) {
+        navigate("/"); // 로그인 페이지로 이동
+      }
+    };
+    checkLogin();
   }, []);
 
   // API로부터 데이터 받아오기
   useEffect(() => {
     const loadData = async () => {
       const data = await fetchTodos();
-      console.log("Fetched data inside useEffect:", data); // 데이터 확인
-
       dispatch({ type: "SET_TODOS", data });
     };
     loadData();
@@ -149,7 +183,7 @@ function Home() {
       if (targetTodo) {
         try {
           const response = await fetch(
-            `http://localhost:8080/api/todos/${listId}`, // 백틱으로 수정
+            `%{BASE_URL}/todos/${listId}`, // 백틱으로 수정
             {
               method: "PATCH",
               headers: {
@@ -203,22 +237,19 @@ function Home() {
 
       try {
         // 2. 백엔드 업데이트 요청
-        const response = await fetch(
-          `http://localhost:8080/api/todos/edit/${listId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              listId,
-              content: newContent,
-              priority: newPriority,
-              startDate: newStartDate,
-              endDate: newEndDate,
-            }),
-          }
-        );
+        const response = await fetch(`${BASE_URL}/todos/edit/${listId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            listId,
+            content: newContent,
+            priority: newPriority,
+            startDate: newStartDate,
+            endDate: newEndDate,
+          }),
+        });
 
         if (!response.ok) {
           throw new Error("수정 실패");
