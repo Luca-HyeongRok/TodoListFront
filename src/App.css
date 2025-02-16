@@ -1,0 +1,5 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* ✅ 푸터가 너무 밀려 내려가지 않도록 수정 */
+}

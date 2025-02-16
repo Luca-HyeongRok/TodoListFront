@@ -1,0 +1,61 @@
+/* 헤더 레이아웃 */
+.Header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  margin: 15px;
+}
+
+/* 로그인한 사용자 정보 스타일 */
+.user-info {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  font-size: 11px;
+  font-weight: bold;
+  color: rgb(166, 122, 98);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 로그아웃 버튼  */
+.logout-link {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logout-link:hover {
+  text-decoration: underline;
+}
+
+/* 날짜 선택 (달력) 스타일 */
+.date-picker-input {
+  font-weight: bold;
+  color: rgb(166, 122, 98);
+  cursor: pointer;
+  border: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+  width: 105px;
+}
+
+/* 달력 버튼 스타일 */
+.Header > button {
+  font-weight: bold;
+  background-color: white;
+  color: rgb(166, 122, 98);
+  cursor: pointer;
+  border: none;
+  padding: 5px 10px;
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+}

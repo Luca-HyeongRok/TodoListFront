@@ -1,0 +1,18 @@
+.footer {
+  background-color: rgb(166, 122, 98);
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  width: 100%;
+  position: relative;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,35 @@
+h3 {
+  margin-bottom: 15px;
+}
+
+.List {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.List > input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgb(240, 240, 226);
+  padding: 15px 0px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.List input:focus {
+  outline: 0;
+  border-bottom: 1px solid rgb(166, 122, 98);
+}
+
+.List .todos_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.TotalCheck {
+  display: flex; /* h2와 나머지 텍스트를 가로로 배치 */
+  align-items: center; /* 세로로 가운데 정렬 */
+  gap: 50px; /* 텍스트 간격 설정 */
+}

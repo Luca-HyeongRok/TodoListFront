@@ -1,0 +1,98 @@
+.TodoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgb(240, 240, 226);
+}
+
+.TodoItem .content {
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.TodoItem .content.done {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.TodoItem .dates {
+  font-size: 14px;
+  color: rgba(41, 40, 40, 0.988);
+}
+
+.TodoItem button {
+  width: 50px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(186, 170, 145);
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+/* 체크박스 색상 스타일링 */
+/* 체크박스 기본 스타일 */
+.TodoItem input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  position: relative;
+}
+
+/* 체크되었을 때 ✔ 표시 추가 */
+.TodoItem input[type="checkbox"]::after {
+  content: "✔"; /* ✅ 체크 표시 */
+  font-size: 16px;
+  color: rgb(164, 164, 164); /* 체크 표시 색상 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0; /* 기본적으로 안 보이게 설정 */
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* 체크되었을 때 ✔ 표시 보이게 설정 */
+.TodoItem input[type="checkbox"]:checked::after {
+  opacity: 1; /* 체크되었을 때 ✔ 표시 보이게 설정 */
+}
+
+/* 각 중요도별 체크되지 않은 상태 색상 */
+.TodoItem input[type="checkbox"][data-priority="1"]:not(:checked) {
+  background-color: #ff4d4dd3; /* 진한 빨간색 */
+  border-color: #ff4d4dd3;
+}
+
+.TodoItem input[type="checkbox"][data-priority="2"]:not(:checked) {
+  background-color: hwb(120 31% 28% / 0.881); /* 진한 초록색 */
+  border-color: hwb(120 31% 28% / 0.881);
+}
+
+.TodoItem input[type="checkbox"]:not(:checked) {
+  background-color: hsla(0, 0%, 75%, 0.873); /* 밝은 회색 */
+  border-color: hsla(0, 0%, 75%, 0.873); /* 부드러운 회색 */
+}
+
+/* 체크된 상태에 따른 색상 (흐린 색상) */
+.TodoItem input[type="checkbox"]:checked {
+  background-color: #f2f2f2; /* 흐린 회색 */
+  border-color: #ccc;
+}
+
+.TodoItem input[type="checkbox"][data-priority="1"]:checked {
+  background-color: #ffb3b3; /* 흐린 빨간색 */
+  border-color: #ff4d4dd3;
+}
+
+.TodoItem input[type="checkbox"][data-priority="2"]:checked {
+  background-color: #ccffcc; /* 흐린 초록색 */
+  border-color: hwb(120 31% 28% / 0.881);
+}

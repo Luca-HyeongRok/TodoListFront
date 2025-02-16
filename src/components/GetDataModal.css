@@ -1,0 +1,130 @@
+/* 모달 오버레이 */
+.modal-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 모달 콘텐츠 */
+.modal-content {
+  position: relative; /* 상대 위치 지정 */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  /*max-width: 400px;*/
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 제목 스타일 */
+.modal-content h2 {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 각 입력 필드 스타일 */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+  width: 100%;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  /* max-width: 300px;*/
+  padding: 10px; /* 충분한 여백을 위해 패딩을 추가 */
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  /*border-color: rgb(211, 196, 171);*/
+  outline: none;
+  text-align: center;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: rgb(101, 87, 75);
+}
+
+/* react-datepicker 기본 스타일 초기화 */
+.react-datepicker {
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 날짜 선택창의 크기를 조절 */
+.react-datepicker__input-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 시간 선택 부분 정렬 */
+.react-datepicker-time__header,
+.react-datepicker__time-container {
+  font-size: 14px;
+}
+/* 날짜 선택 영역 스타일 */
+.react-datepicker__month-container {
+  width: auto;
+}
+
+/* 네비게이션 버튼 스타일 */
+.react-datepicker__navigation {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.react-datepicker__input-container input:focus {
+  border-color: rgb(101, 87, 75);
+}
+/* 선택한 날짜 스타일 */
+.react-datepicker__day--selected {
+  background-color: rgb(166, 122, 98) !important;
+  color: white !important;
+  border-radius: 5px;
+}
+
+/* hover 효과 */
+.react-datepicker__day:hover {
+  background-color: rgb(211, 196, 171) !important;
+}
+.modal-actions button {
+  width: 120px;
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: rgb(186, 170, 145); /* 기본 배경색 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-actions button:hover {
+  background-color: rgb(211, 196, 171); /* hover 색상도 동일하게 설정 */
+}
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+  width: 100%;
+}

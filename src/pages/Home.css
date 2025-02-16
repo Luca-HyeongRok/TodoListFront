@@ -1,0 +1,12 @@
+.home-container {
+  width: 88%;
+  margin: 0 auto; /* 위/아래 여백은 0, 좌/우 여백은 자동으로 설정하여 중앙 정렬 */
+  display: flex; /* 한 줄로 배치 */
+  flex-direction: column; /* flex의 방향은 열(세로)로*/
+  gap: 10px; /* 자식 요소들 사이의 간격을 10px로 설정 (display가 flex일 때만 사용 가능) */
+  min-height: 100vh;
+  height: auto;
+}
+.main-content {
+  flex: 1; /* ✅ 내용이 푸터를 밀어내도록 설정 */
+}
