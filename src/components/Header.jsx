@@ -1,11 +1,10 @@
 import "./Header.css";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // 스타일링을 위한 CSS
 
-const Header = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+const Header = ({ selectedDate, setSelectedDate, moveDate }) => {
   const [userName, setUserName] = useState(""); // 로그인한 유저의 이름 저장
   const navigate = useNavigate();
 
@@ -29,7 +28,7 @@ const Header = () => {
     }
   }, []);
 
-  // 로그아웃 함수 (확인 창 추가)
+  // 로그아웃 함수
   const handleLogout = () => {
     const confirmLogout = window.confirm("로그아웃하시겠습니까?");
     if (confirmLogout) {
@@ -39,16 +38,10 @@ const Header = () => {
     }
   };
 
-  // 날짜 변경 함수
+  // 날짜 선택 시 업데이트 (DatePicker에서 선택한 날짜 반영)
   const handleDateChange = (date) => {
     setSelectedDate(date);
-  };
-
-  // 날짜 이동 (하루 전, 하루 후)
-  const moveDate = (direction) => {
-    const newDate = new Date(selectedDate);
-    newDate.setDate(newDate.getDate() + direction);
-    setSelectedDate(newDate);
+    moveDate(0, date); //선택한 날짜로 리스트 필터링 (Home.jsx에서 처리)
   };
 
   return (

@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.modal-content {
+.modal-content-delete {
   background-color: white;
   padding: 10px;
   border-radius: 8px;
@@ -21,8 +21,8 @@
 }
 
 .modal-content h2 {
-  font-size: 16px;
-  margin: 18px;
+  font-size: 12px;
+  margin-top: 2px !important;
 }
 
 .delete-modal-actions {

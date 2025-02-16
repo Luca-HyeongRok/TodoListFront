@@ -14,16 +14,24 @@ const GetDataModal = ({
   const [content, setContent] = useState(initialContent || "");
   const [priority, setPriority] = useState(initialPriority || 3);
 
-  // 오늘 날짜의 0 0 0
+  // 선택한 날짜의 00:00:00으로 설정
   const [startDate, setStartDate] = useState(
     initialStartDate
-      ? new Date(initialStartDate)
+      ? new Date(new Date(initialStartDate).setHours(0, 0, 0, 0))
       : new Date(new Date().setHours(0, 0, 0, 0))
   );
 
   const [endDate, setEndDate] = useState(
     initialEndDate ? new Date(initialEndDate) : null
   );
+
+  const handleEndDateChange = (date) => {
+    if (date <= startDate) {
+      alert("종료일은 시작일보다 이후여야 합니다!");
+      return;
+    }
+    setEndDate(date);
+  };
 
   const handleConfirm = () => {
     if (!content || !startDate || !endDate) {
@@ -71,7 +79,7 @@ const GetDataModal = ({
             selected={startDate}
             onChange={(date) => setStartDate(date)}
             showTimeSelect
-            timeIntervals={30} // 30분 단위로 시간 선택
+            timeIntervals={30}
             dateFormat="Pp"
             className="datepicker"
           />
@@ -82,9 +90,9 @@ const GetDataModal = ({
           <label>종료 날짜</label>
           <DatePicker
             selected={endDate}
-            onChange={(date) => setEndDate(date)}
+            onChange={handleEndDateChange}
             showTimeSelect
-            timeIntervals={10} // 10분 단위로 시간 선택
+            timeIntervals={10}
             dateFormat="Pp"
             className="datepicker"
           />
