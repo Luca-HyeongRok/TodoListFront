@@ -40,8 +40,8 @@ const Header = ({ selectedDate, setSelectedDate, moveDate }) => {
 
   // 날짜 선택 시 업데이트 (DatePicker에서 선택한 날짜 반영)
   const handleDateChange = (date) => {
-    setSelectedDate(date);
-    moveDate(0, date); //선택한 날짜로 리스트 필터링 (Home.jsx에서 처리)
+    console.log("선택된 날짜:", date);
+    moveDate(0, date);
   };
 
   return (

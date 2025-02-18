@@ -1,35 +1,23 @@
 import { useState, useEffect, useMemo, useContext } from "react";
 import "./List.css";
 import TodoItem from "./TodoItem";
-import { TodoStateContext } from "../pages/Home";
-import { BASE_URL } from "../config";
+import { TodoStateContext } from "../context/TodoContext";
+import { apiRequest } from "../utils/api";
 
 const List = () => {
-  const todos = useContext(TodoStateContext);
+  const { todos } = useContext(TodoStateContext) || { todos: [] };
   const [search, setSearch] = useState("");
-  const [filteredTodos, setFilteredTodos] = useState(todos);
+  const [filteredTodos, setFilteredTodos] = useState(
+    Array.isArray(todos) ? todos : []
+  );
 
-  // 백엔드에서 검색 결과 가져오는 함수
+  // 검색 결과 가져오기
   const fetchSearchResults = async (keyword) => {
     try {
-      // 검색어를 URL에 맞게 인코딩 (한글 깨짐 방지)
       const encodedKeyword = encodeURIComponent(keyword);
-
-      const response = await fetch(
-        `${BASE_URL}/todos/search?keyword=${encodedKeyword}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("검색 결과를 불러오는 데 실패했습니다.");
-      }
-
-      return await response.json();
+      return await apiRequest(`/todos/search?keyword=${encodedKeyword}`);
     } catch (error) {
-      console.error("검색 오류:", error);
+      console.error("검색 실패:", error);
       return [];
     }
   };
@@ -40,22 +28,23 @@ const List = () => {
     setSearch(newSearch);
 
     if (newSearch === "") {
-      setFilteredTodos(todos); // 검색어가 없으면 원래 데이터 유지
+      setFilteredTodos(Array.isArray(todos) ? todos : []);
     } else {
       const searchResults = await fetchSearchResults(newSearch);
-      setFilteredTodos(searchResults); // 백엔드에서 가져온 검색 결과 반영
+      setFilteredTodos(searchResults);
     }
   };
 
-  // todos 값이 변경될 때 filteredTodos 업데이트
+  // todos 값이 변경될 때 `filteredTodos` 업데이트
   useEffect(() => {
-    setFilteredTodos(todos);
+    setFilteredTodos(Array.isArray(todos) ? todos : []);
   }, [todos]);
 
-  // 통계 계산
+  // 통계 계산 (할 일 개수, 완료 개수, 미완료 개수)
   const { totalCount, doneCount, notDoneCount } = useMemo(() => {
-    const totalCount = todos.length;
-    const doneCount = todos.filter((todo) => todo.done).length;
+    const totalCount = Array.isArray(todos) ? todos.length : 0;
+    const doneCount =
+      totalCount > 0 ? todos.filter((todo) => todo.done).length : 0;
     const notDoneCount = totalCount - doneCount;
 
     return {
@@ -69,7 +58,7 @@ const List = () => {
     <div className="List">
       <div className="TotalCheck">
         <div>
-          📆 오늘의 할 일 : {totalCount}개 ⭕ 완료 : {doneCount}개 ❌ 미완료 :
+          📆 오늘의 할 일 : {totalCount}개 ⭕ 완료 : {doneCount}개 ❌ 미완료 :{" "}
           {notDoneCount}개
         </div>
       </div>
@@ -81,7 +70,7 @@ const List = () => {
         placeholder="검색어를 입력하세요"
       />
 
-      {/*  검색된 할 일 목록 표시 */}
+      {/* 검색된 할 일 목록 표시 */}
       <div className="todos_wrapper">
         {filteredTodos.length > 0 ? (
           filteredTodos.map((todo) => <TodoItem key={todo.listId} {...todo} />)

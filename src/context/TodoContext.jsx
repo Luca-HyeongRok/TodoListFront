@@ -1,5 +1,6 @@
 import { createContext, useReducer, useEffect, useState } from "react";
 import { apiRequest } from "../utils/api";
+import { fetchTodosByDate } from "../utils/api";
 
 export const TodoStateContext = createContext();
 export const TodoDispatchContext = createContext();
@@ -55,7 +56,7 @@ const reducer = (state, action) => {
         ),
       };
 
-    case "CHANGE_DATE": //  날짜 변경 시 API 호출
+    case "CHANGE_DATE":
       return { ...state, selectedDate: action.date };
 
     default:
@@ -70,13 +71,17 @@ export const TodoProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    const fetchTodosByDate = async () => {
-      const formattedDate = state.selectedDate.toISOString().split("T")[0];
-      const data = await apiRequest(`/todos/date?date=${formattedDate}`);
+    const fetchTodos = async () => {
+      if (!state.selectedDate) return;
+
+      const formattedDate = state.selectedDate.toISOString().split("T")[0]; // ✅ YYYY-MM-DD 형식으로 변환
+      console.log("📅 API 요청: ", formattedDate, "정렬: desc"); // 디버깅용 콘솔 출력
+
+      const data = await fetchTodosByDate(formattedDate, "desc"); // ✅ 정렬 추가
       dispatch({ type: "SET_TODOS", data });
     };
 
-    fetchTodosByDate();
+    fetchTodos();
   }, [state.selectedDate]); // selectedDate가 변경될 때만 실행
 
   return (

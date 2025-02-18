@@ -1,9 +1,11 @@
 import AppRouter from "./routes/AppRouter";
+import { TodoProvider } from "./context/TodoContext"; // TodoProvider 추가
+
 function App() {
   return (
-    <div>
+    <TodoProvider>
       <AppRouter />
-    </div>
+    </TodoProvider>
   );
 }
 
