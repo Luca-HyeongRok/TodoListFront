@@ -2,10 +2,10 @@ import "./Modal.css";
 
 const DeleteModal = ({ message, onConfirm, onCancel }) => {
   return (
-    <div className="modal-overlay">
-      <div className="modal-content-delete">
+    <div className="modal-overlay delete">
+      <div className="modal-content delete">
         <h2>{message}</h2>
-        <div className="delete-modal-actions">
+        <div className="modal-actions">
           <button onClick={onConfirm}>확인</button>
           <button onClick={onCancel}>취소</button>
         </div>

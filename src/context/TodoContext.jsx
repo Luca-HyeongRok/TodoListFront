@@ -74,10 +74,10 @@ export const TodoProvider = ({ children }) => {
     const fetchTodos = async () => {
       if (!state.selectedDate) return;
 
-      const formattedDate = state.selectedDate.toISOString().split("T")[0]; // ✅ YYYY-MM-DD 형식으로 변환
-      console.log("📅 API 요청: ", formattedDate, "정렬: desc"); // 디버깅용 콘솔 출력
+      const formattedDate = state.selectedDate.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
+      console.log("📅 API 요청: ", formattedDate); // 디버깅용 콘솔 출력
 
-      const data = await fetchTodosByDate(formattedDate, "desc"); // ✅ 정렬 추가
+      const data = await fetchTodosByDate(formattedDate); // 정렬 추가
       dispatch({ type: "SET_TODOS", data });
     };
 

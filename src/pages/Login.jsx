@@ -16,7 +16,7 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // 세션 쿠키를 포함하여 요청
+        credentials: "include",
         body: JSON.stringify({ userId, password }),
       });
 
@@ -24,6 +24,7 @@ const Login = () => {
         alert("아이디 또는 비밀번호가 올바르지 않습니다.");
         return;
       }
+
       // 로그인 후 세션 정보 확인
       const sessionResponse = await fetch(`${BASE_URL}/users/session`, {
         method: "GET",
@@ -34,9 +35,15 @@ const Login = () => {
         console.error("세션 확인 실패");
         return;
       }
+
       const userData = await sessionResponse.json();
-      localStorage.setItem("user", JSON.stringify(userData)); //세션 데이터 저장
-      navigate("/home");
+      console.log("로그인 성공, 유저 데이터:", userData); // 확인용 로그
+      localStorage.setItem("user", JSON.stringify(userData)); // 세션 데이터 저장
+
+      // 새로고침 없이 화면을 갱신하기 위해 navigate 사용
+      setTimeout(() => {
+        navigate("/home");
+      }, 100); // 약간의 딜레이를 주어 상태 업데이트가 반영되도록 함
     } catch (error) {
       console.error("로그인 중 오류 발생:", error);
       alert("서버와의 통신 중 문제가 발생했습니다.");

@@ -49,7 +49,7 @@ const GetDataModal = ({
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-content getData">
         <h2>할 일 세부사항을 입력하세요</h2>
         <div className="form-group">
           <label>할 일</label>

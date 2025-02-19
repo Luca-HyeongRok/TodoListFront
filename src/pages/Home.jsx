@@ -22,6 +22,8 @@ const Home = () => {
       if (!user) {
         setIsAuthenticated(false);
         navigate("/"); //세션이 없으면 로그인 페이지로 이동
+      } else {
+        dispatch({ type: "SET_USER", user }); // 세션 정보 업데이트
       }
     };
 
