@@ -9,3 +9,6 @@
 주요 페이지 Home.jsx 할 일 목록을 표시하는 메인페이지 useReducer와 useContext를 활용해 상태관리를 했습니다.
 
 주요 컴포넌트 및 설명 -Header.jsx 날짜 선택 / 이동 로그아웃 기능 -Editor.jsx 할 일 추가 GetDataModal.jsx(모달 팝업)과 함께 사용 -List.jsx 현재 날짜 또는 검색된 할 일 목록을 보여주는 리스트 TodoItem.jsx(개별 할 일 아이템)과 함께 사용됨 -TodoItem.jsx 개별 할 일 아이템을 표시하는 컴포넌트 체크박스(완료 여부), 수정 버튼, 삭제 버튼 포함
+
+ver1.
+ver2.
